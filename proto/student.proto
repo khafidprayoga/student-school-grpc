@@ -1,0 +1,58 @@
+syntax = "proto3";
+package student;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "/proto/pb";
+
+message PhoneNumber {
+  string id = 1;
+
+  enum PhoneType {
+    CELLULAR = 0;
+    HOME = 1;
+  }
+}
+
+message Student {
+  int32 id = 1;
+  string fullName = 2;
+  google.protobuf.Timestamp birthDate = 3;
+  string class = 4;
+  string address = 5;
+  repeated PhoneNumber phones = 6;
+}
+
+message UpdateStudentPhoneRequest {
+  int32 id = 1;
+  string newPhone = 2;
+}
+
+message UpdateStudentAddressRequest {
+  int32 id = 1;
+  string newAddress = 2;
+}
+
+message SuccessResponse {
+  string message = 1;
+  int32 code = 2;
+}
+
+message GetStudentByIdRequest { int32 id = 1; }
+
+message CreateStudentRequest {
+  string fullName = 2;
+  google.protobuf.Timestamp birthDate = 3;
+  string class = 4;
+  string address = 5;
+  repeated PhoneNumber phones = 6;
+}
+
+service StudentService {
+  rpc CreateStudent(CreateStudentRequest) returns (Student);
+  rpc GetStudentById(GetStudentByIdRequest) returns (Student);
+  rpc GetAllStudent(google.protobuf.Empty) returns (Student);
+  rpc UpdateStudentAddress(UpdateStudentAddressRequest) returns (Student);
+  rpc UpdateStudentPhone(UpdateStudentPhoneRequest) returns (Student);
+}
