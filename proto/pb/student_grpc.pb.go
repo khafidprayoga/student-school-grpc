@@ -25,7 +25,7 @@ const _ = grpc.SupportPackageIsVersion7
 type StudentServiceClient interface {
 	CreateStudent(ctx context.Context, in *CreateStudentRequest, opts ...grpc.CallOption) (*Student, error)
 	GetStudentById(ctx context.Context, in *GetStudentByIdRequest, opts ...grpc.CallOption) (*Student, error)
-	GetAllStudent(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Student, error)
+	GetAllStudent(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ListStudent, error)
 	UpdateStudentAddress(ctx context.Context, in *UpdateStudentAddressRequest, opts ...grpc.CallOption) (*Student, error)
 	UpdateStudentPhone(ctx context.Context, in *UpdateStudentPhoneRequest, opts ...grpc.CallOption) (*Student, error)
 }
@@ -56,8 +56,8 @@ func (c *studentServiceClient) GetStudentById(ctx context.Context, in *GetStuden
 	return out, nil
 }
 
-func (c *studentServiceClient) GetAllStudent(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Student, error) {
-	out := new(Student)
+func (c *studentServiceClient) GetAllStudent(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ListStudent, error) {
+	out := new(ListStudent)
 	err := c.cc.Invoke(ctx, "/student.StudentService/GetAllStudent", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -89,7 +89,7 @@ func (c *studentServiceClient) UpdateStudentPhone(ctx context.Context, in *Updat
 type StudentServiceServer interface {
 	CreateStudent(context.Context, *CreateStudentRequest) (*Student, error)
 	GetStudentById(context.Context, *GetStudentByIdRequest) (*Student, error)
-	GetAllStudent(context.Context, *emptypb.Empty) (*Student, error)
+	GetAllStudent(context.Context, *emptypb.Empty) (*ListStudent, error)
 	UpdateStudentAddress(context.Context, *UpdateStudentAddressRequest) (*Student, error)
 	UpdateStudentPhone(context.Context, *UpdateStudentPhoneRequest) (*Student, error)
 	mustEmbedUnimplementedStudentServiceServer()
@@ -105,7 +105,7 @@ func (UnimplementedStudentServiceServer) CreateStudent(context.Context, *CreateS
 func (UnimplementedStudentServiceServer) GetStudentById(context.Context, *GetStudentByIdRequest) (*Student, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetStudentById not implemented")
 }
-func (UnimplementedStudentServiceServer) GetAllStudent(context.Context, *emptypb.Empty) (*Student, error) {
+func (UnimplementedStudentServiceServer) GetAllStudent(context.Context, *emptypb.Empty) (*ListStudent, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllStudent not implemented")
 }
 func (UnimplementedStudentServiceServer) UpdateStudentAddress(context.Context, *UpdateStudentAddressRequest) (*Student, error) {
