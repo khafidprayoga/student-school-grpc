@@ -27,9 +27,9 @@ func main() {
 		panic(err)
 	}
 
-	studentServices := controller.NewStudentServer(db)
+	srv := controller.NewStudentServer(db)
 	s := server.GetGrpcServer()
-	pb.RegisterStudentServiceServer(s, &studentServices)
+	pb.RegisterStudentServiceServer(s, &srv)
 
 	lis, err := net.Listen("tcp", ":4500")
 	if err != nil {

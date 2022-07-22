@@ -3,11 +3,11 @@ package main
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/khafidprayoga/grpc-basic/proto/pb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 func main() {
@@ -18,6 +18,15 @@ func main() {
 	}
 	client := pb.NewStudentServiceClient(conn)
 
-	listStudent, err := client.GetAllStudent(context.Background(), &emptypb.Empty{})
-	fmt.Printf("List student:\n %v", listStudent)
+	student := pb.CreateStudentRequest{
+		FullName:  "Khafid Prayoga",
+		Address:   "Mojokerto",
+		Class:     "X-TKJ-2",
+		BirthDate: uint64(time.Now().Unix()),
+	}
+	created, err := client.CreateStudent(context.Background(), &student)
+	if err != nil {
+		fmt.Printf("error %v", err)
+	}
+	fmt.Printf("Data student\n\n%v \n", created)
 }

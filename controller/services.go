@@ -21,15 +21,19 @@ func NewStudentServer(db *gorm.DB) StudentServer {
 	}
 }
 
-func (s *StudentServer) CreateStudent(ctx context.Context, req *pb.CreateStudentRequest) (*pb.Student, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateStudent not implemented")
+func (s *StudentServer) CreateStudent(ctx context.Context, req *pb.CreateStudentRequest) (*pb.CreatedStudentResponse, error) {
+	return AddStudent(s.DB, req)
 }
-func (s *StudentServer) GetStudentById(ctx context.Context, req *pb.GetStudentByIdRequest) (*pb.Student, error) {
+func (s *StudentServer) GetStudentById(ctx context.Context, req *pb.GetStudentByIdRequest) (*pb.StudentDetailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetStudentById not implemented")
 }
 func (s *StudentServer) GetAllStudent(ctx context.Context, req *emptypb.Empty) (*pb.ListStudent, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllStudent not implemented")
 }
-func (s *StudentServer) UpdateStudentAddress(ctx context.Context, req *pb.UpdateStudentAddressRequest) (*pb.Student, error) {
+func (s *StudentServer) UpdateStudentAddress(ctx context.Context, req *pb.UpdateStudentAddressRequest) (*pb.GlobalResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateStudentAddress not implemented")
+}
+
+func (s *StudentServer) DeleteStudent(ctx context.Context, req *pb.DeleteStudentRequest) (*pb.GlobalResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteStudent not implemented")
 }
