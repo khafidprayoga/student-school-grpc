@@ -27,7 +27,6 @@ type StudentServiceClient interface {
 	GetStudentById(ctx context.Context, in *GetStudentByIdRequest, opts ...grpc.CallOption) (*Student, error)
 	GetAllStudent(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ListStudent, error)
 	UpdateStudentAddress(ctx context.Context, in *UpdateStudentAddressRequest, opts ...grpc.CallOption) (*Student, error)
-	UpdateStudentPhone(ctx context.Context, in *UpdateStudentPhoneRequest, opts ...grpc.CallOption) (*Student, error)
 }
 
 type studentServiceClient struct {
@@ -74,15 +73,6 @@ func (c *studentServiceClient) UpdateStudentAddress(ctx context.Context, in *Upd
 	return out, nil
 }
 
-func (c *studentServiceClient) UpdateStudentPhone(ctx context.Context, in *UpdateStudentPhoneRequest, opts ...grpc.CallOption) (*Student, error) {
-	out := new(Student)
-	err := c.cc.Invoke(ctx, "/student.StudentService/UpdateStudentPhone", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // StudentServiceServer is the server API for StudentService service.
 // All implementations must embed UnimplementedStudentServiceServer
 // for forward compatibility
@@ -91,7 +81,6 @@ type StudentServiceServer interface {
 	GetStudentById(context.Context, *GetStudentByIdRequest) (*Student, error)
 	GetAllStudent(context.Context, *emptypb.Empty) (*ListStudent, error)
 	UpdateStudentAddress(context.Context, *UpdateStudentAddressRequest) (*Student, error)
-	UpdateStudentPhone(context.Context, *UpdateStudentPhoneRequest) (*Student, error)
 	mustEmbedUnimplementedStudentServiceServer()
 }
 
@@ -110,9 +99,6 @@ func (UnimplementedStudentServiceServer) GetAllStudent(context.Context, *emptypb
 }
 func (UnimplementedStudentServiceServer) UpdateStudentAddress(context.Context, *UpdateStudentAddressRequest) (*Student, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateStudentAddress not implemented")
-}
-func (UnimplementedStudentServiceServer) UpdateStudentPhone(context.Context, *UpdateStudentPhoneRequest) (*Student, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateStudentPhone not implemented")
 }
 func (UnimplementedStudentServiceServer) mustEmbedUnimplementedStudentServiceServer() {}
 
@@ -199,24 +185,6 @@ func _StudentService_UpdateStudentAddress_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
-func _StudentService_UpdateStudentPhone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateStudentPhoneRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(StudentServiceServer).UpdateStudentPhone(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/student.StudentService/UpdateStudentPhone",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StudentServiceServer).UpdateStudentPhone(ctx, req.(*UpdateStudentPhoneRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // StudentService_ServiceDesc is the grpc.ServiceDesc for StudentService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -239,10 +207,6 @@ var StudentService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateStudentAddress",
 			Handler:    _StudentService_UpdateStudentAddress_Handler,
-		},
-		{
-			MethodName: "UpdateStudentPhone",
-			Handler:    _StudentService_UpdateStudentPhone_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

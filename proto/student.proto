@@ -6,29 +6,12 @@ import "google/protobuf/empty.proto";
 
 option go_package = "/proto/pb";
 
-enum PhoneType {
-  CELLULAR = 0;
-  HOME = 1;
-}
-
-message PhoneNumber {
-  string number = 1;
-  PhoneType type = 2;
-}
-
 message Student {
   int32 id = 1;
   string fullName = 2;
   google.protobuf.Timestamp birthDate = 3;
   string class = 4;
   string address = 5;
-  repeated PhoneNumber phones = 6;
-}
-
-message UpdateStudentPhoneRequest {
-  int32 id = 1;
-  string newPhone = 2;
-  PhoneType type = 3;
 }
 
 message UpdateStudentAddressRequest {
@@ -36,7 +19,7 @@ message UpdateStudentAddressRequest {
   string newAddress = 2;
 }
 
-message SuccessResponse {
+message Response {
   string message = 1;
   int32 code = 2;
 }
@@ -48,7 +31,6 @@ message CreateStudentRequest {
   google.protobuf.Timestamp birthDate = 3;
   string class = 4;
   string address = 5;
-  repeated PhoneNumber phones = 6;
 }
 message ListStudent { repeated Student students = 1; }
 
@@ -57,5 +39,4 @@ service StudentService {
   rpc GetStudentById(GetStudentByIdRequest) returns (Student);
   rpc GetAllStudent(google.protobuf.Empty) returns (ListStudent);
   rpc UpdateStudentAddress(UpdateStudentAddressRequest) returns (Student);
-  rpc UpdateStudentPhone(UpdateStudentPhoneRequest) returns (Student);
 }

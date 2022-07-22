@@ -22,7 +22,6 @@ func main() {
 	db := utils.GetDbConn()
 	db.AutoMigrate(
 		entity.Student{},
-		entity.PhoneNumber{},
 	)
 	if err != nil {
 		panic(err)
