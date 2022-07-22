@@ -10,6 +10,7 @@ import (
 	"github.com/khafidprayoga/grpc-basic/controller"
 	"github.com/khafidprayoga/grpc-basic/proto/pb"
 	"github.com/khafidprayoga/grpc-basic/server"
+	"google.golang.org/grpc/reflection"
 )
 
 func main() {
@@ -30,7 +31,7 @@ func main() {
 	srv := controller.NewStudentServer(db)
 	s := server.GetGrpcServer()
 	pb.RegisterStudentServiceServer(s, &srv)
-
+	reflection.Register(s)
 	lis, err := net.Listen("tcp", ":4500")
 	if err != nil {
 		panic(err)
