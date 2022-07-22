@@ -1,3 +1,7 @@
 package server
 
-type StudentServer struct{}
+import "google.golang.org/grpc"
+
+func GetGrpcServer() *grpc.Server {
+	return grpc.NewServer()
+}
