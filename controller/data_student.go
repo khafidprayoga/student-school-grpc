@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"errors"
+	"net/http"
 	"github.com/khafidprayoga/grpc-basic/common/entities"
 	"github.com/khafidprayoga/grpc-basic/proto/pb"
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -40,5 +42,21 @@ func GetAllStudent(db *gorm.DB, req *emptypb.Empty) (*pb.ListStudent, error) {
 
 	return &pb.ListStudent{
 		Students: studentsPb,
+	}, nil
+}
+
+func UpdateStudentAddress(db *gorm.DB, req *pb.UpdateStudentAddressRequest) (*pb.GlobalResponse, error) {
+	var student entities.Student
+	studentId := req.GetId()
+	newAddress := req.GetNewAddress()
+
+	result := db.Model(&student).Where("id = ?", studentId).Update("address", newAddress)
+
+	if result.Error != nil {
+		return nil, errors.New("Failed update student address")
+	}
+	return &pb.GlobalResponse{
+		Code:    http.StatusOK,
+		Message: "Address successfully updated",
 	}, nil
 }

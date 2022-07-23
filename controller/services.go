@@ -31,7 +31,7 @@ func (s *StudentServer) GetAllStudent(ctx context.Context, req *emptypb.Empty) (
 	return GetAllStudent(s.DB, req)
 }
 func (s *StudentServer) UpdateStudentAddress(ctx context.Context, req *pb.UpdateStudentAddressRequest) (*pb.GlobalResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateStudentAddress not implemented")
+	return UpdateStudentAddress(s.DB, req)
 }
 
 func (s *StudentServer) DeleteStudent(ctx context.Context, req *pb.DeleteStudentRequest) (*pb.GlobalResponse, error) {

@@ -7,7 +7,6 @@ import (
 	"github.com/khafidprayoga/grpc-basic/proto/pb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 func main() {
@@ -32,6 +31,12 @@ func main() {
 	// data, _ := client.GetStudentById(context.Background(), &pb.GetStudentByIdRequest{Id: 1})
 	// fmt.Printf("Data student\n\n%v \n", data)
 
-	data, _ := client.GetAllStudent(context.Background(), &emptypb.Empty{})
-	fmt.Printf("Data student\n\n%v \n", data)
+	// data, _ := client.GetAllStudent(context.Background(), &emptypb.Empty{})
+	// fmt.Printf("Data student\n\n%v \n", data)
+
+	data, _ := client.UpdateStudentAddress(context.Background(), &pb.UpdateStudentAddressRequest{
+		Id:         1,
+		NewAddress: "Germany",
+	})
+	fmt.Printf("Status perubahan data \n\n%v \n", data)
 }
