@@ -1,21 +1,12 @@
 package main
 
-import (
-	"context"
-	"fmt"
-
-	"github.com/khafidprayoga/grpc-basic/proto/pb"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
-)
-
 func main() {
-	conn, err := grpc.Dial("localhost:4500",
-		grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		panic(err)
-	}
-	client := pb.NewStudentServiceClient(conn)
+	// conn, err := grpc.Dial("localhost:4500",
+	// 	grpc.WithTransportCredentials(insecure.NewCredentials()))
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// client := pb.NewStudentServiceClient(conn)
 
 	// student := pb.CreateStudentRequest{
 	// 	FullName:  "Khafid Prayoga",
@@ -34,9 +25,12 @@ func main() {
 	// data, _ := client.GetAllStudent(context.Background(), &emptypb.Empty{})
 	// fmt.Printf("Data student\n\n%v \n", data)
 
-	data, _ := client.UpdateStudentAddress(context.Background(), &pb.UpdateStudentAddressRequest{
-		Id:         1,
-		NewAddress: "Germany",
-	})
-	fmt.Printf("Status perubahan data \n\n%v \n", data)
+	// data, _ := client.UpdateStudentAddress(context.Background(), &pb.UpdateStudentAddressRequest{
+	// 	Id:         1,
+	// 	NewAddress: "Germany",
+	// })
+	// fmt.Printf("Status perubahan data \n\n%v \n", data)
+
+	// data, _ := client.DeleteStudent(context.Background(), &pb.DeleteStudentRequest{Id: 20})
+	// fmt.Printf("Status perubahan data \n\n%v \n", data)
 }

@@ -4,8 +4,6 @@ import (
 	"context"
 
 	"github.com/khafidprayoga/grpc-basic/proto/pb"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/emptypb"
 	"gorm.io/gorm"
 )
@@ -35,5 +33,5 @@ func (s *StudentServer) UpdateStudentAddress(ctx context.Context, req *pb.Update
 }
 
 func (s *StudentServer) DeleteStudent(ctx context.Context, req *pb.DeleteStudentRequest) (*pb.GlobalResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteStudent not implemented")
+	return DeleteStudent(s.DB, req)
 }

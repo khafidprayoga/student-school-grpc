@@ -2,6 +2,7 @@ package controller
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/khafidprayoga/grpc-basic/common/entities"
@@ -66,5 +67,18 @@ func UpdateStudentAddress(db *gorm.DB, req *pb.UpdateStudentAddressRequest) (*pb
 	return &pb.GlobalResponse{
 		Code:    http.StatusOK,
 		Message: "Address successfully updated",
+	}, nil
+}
+
+func DeleteStudent(db *gorm.DB, req *pb.DeleteStudentRequest) (*pb.GlobalResponse, error) {
+	var student entities.Student
+	res := db.Delete(&student, req.GetId())
+	if res.Error != nil {
+		return nil, errors.New("Failed to delete student")
+	}
+
+	return &pb.GlobalResponse{
+		Code:    http.StatusOK,
+		Message: fmt.Sprintf("Student deleted with Id  %v", req.GetId()),
 	}, nil
 }
