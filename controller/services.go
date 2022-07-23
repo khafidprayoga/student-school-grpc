@@ -28,7 +28,7 @@ func (s *StudentServer) GetStudentById(ctx context.Context, req *pb.GetStudentBy
 	return GetStudentById(s.DB, req)
 }
 func (s *StudentServer) GetAllStudent(ctx context.Context, req *emptypb.Empty) (*pb.ListStudent, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAllStudent not implemented")
+	return GetAllStudent(s.DB, req)
 }
 func (s *StudentServer) UpdateStudentAddress(ctx context.Context, req *pb.UpdateStudentAddressRequest) (*pb.GlobalResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateStudentAddress not implemented")
