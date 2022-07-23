@@ -3,6 +3,7 @@ package controller
 import (
 	"errors"
 	"net/http"
+
 	"github.com/khafidprayoga/grpc-basic/common/entities"
 	"github.com/khafidprayoga/grpc-basic/proto/pb"
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -11,7 +12,11 @@ import (
 
 func GetStudentById(db *gorm.DB, req *pb.GetStudentByIdRequest) (*pb.StudentDetailResponse, error) {
 	var student entities.Student
-	db.First(&student).Where("id = ?", req.Id)
+	res := db.First(&student).Where("id = ?", req.Id)
+
+	if res.Error != nil {
+		return nil, errors.New("Failed get student details")
+	}
 	var studentData = pb.StudentDetailResponse{
 		Data: &pb.Student{
 			Id:        int32(student.Id),
@@ -27,7 +32,10 @@ func GetStudentById(db *gorm.DB, req *pb.GetStudentByIdRequest) (*pb.StudentDeta
 func GetAllStudent(db *gorm.DB, req *emptypb.Empty) (*pb.ListStudent, error) {
 	var students []entities.Student
 	var studentsPb []*pb.Student
-	db.Find(&students)
+	result := db.Find(&students)
+	if result.Error != nil {
+		return nil, errors.New("Failed fetch all student data")
+	}
 
 	for _, val := range students {
 		student := &pb.Student{
