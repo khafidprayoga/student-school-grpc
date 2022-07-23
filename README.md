@@ -12,4 +12,4 @@ With CRUD student data on school study case. You can use this repo for free!
 4. Create bussines logic
 5. Register student services to gRPC server
 
-Special thanks to @ajaydeta
+Special thanks to [@ajaydeta](https://github.com/ajaydeta)
